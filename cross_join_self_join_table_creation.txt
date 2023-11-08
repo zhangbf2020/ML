@@ -1,0 +1,38 @@
+DROP TABLE IF EXISTS teacher_student;
+CREATE TABLE teacher_student (
+	Teacher_id smallint not NULL,
+	tname character varying(25) NULL,
+	sname character varying(25) NULL
+); 
+
+INSERT INTO teacher_student VALUES (1, 'Henry Liu', 'Peter');
+INSERT INTO teacher_student VALUES (1, 'Henry Liu', 'Kate');
+INSERT INTO teacher_student VALUES (1, 'Henry Liu', 'Brown');
+INSERT INTO teacher_student VALUES (2, 'Betty Wang', 'Mary');
+INSERT INTO teacher_student VALUES (3, 'Leo Zhang', 'Jerry');
+
+
+DROP TABLE IF EXISTS Activity;
+CREATE TABLE Activity(
+	user_id smallint not NULL,
+	Date date not NULL
+);
+
+INSERT INTO Activity VALUES (1, '2018-12-01');
+INSERT INTO Activity VALUES (1, '2018-12-03');
+INSERT INTO Activity VALUES (1, '2018-12-08');
+INSERT INTO Activity VALUES (1, '2018-12-20');
+INSERT INTO Activity VALUES (2, '2018-12-10');
+INSERT INTO Activity VALUES (2, '2018-12-20');
+
+select  distinct a.User_id, a.date, 
+		case when b.User_id is null then 'No'
+		else 'Yes'
+		end as wau
+from activity a
+left join activity b
+on a.User_id = b.User_id
+and b.date > a.date - 7  -- join only with the dates within 7 days from the current date
+and b.date < a.date   -- don’t join with the current date
+order by a.User_id, a.date;
+
