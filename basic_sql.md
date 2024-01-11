@@ -11,7 +11,8 @@ The questions in this section helps you have a basic understanding of the databa
 ### Q1: Understand the basic information of each table of the CRM database. Select Top 10 records from each table. It is a good way to visualize all the fields and have a basic understanding of the relationship between the database tables. 
 
 ```sql
-Input your solution here
+SELECT * FROM table_name LIMIT 10;
+
 ```
 
 ### Q2: From the “shippers” table, select shippers with a phone number starting with “1-800” or ending with “9931” or shipper_id equal to 1.
