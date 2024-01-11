@@ -18,7 +18,10 @@ SELECT * FROM table_name LIMIT 10;
 ### Q2: From the “shippers” table, select shippers with a phone number starting with “1-800” or ending with “9931” or shipper_id equal to 1.
 
 ```sql
-Input your solution here
+SELECT *
+FROM shippers
+WHERE phone LIKE '1-800%' OR phone LIKE '%9931' OR shipper_id = 1;
+
 ```
 
 ### Q3: For the “customers” table, do three things: 
