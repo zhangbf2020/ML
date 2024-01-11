@@ -30,13 +30,27 @@ WHERE phone LIKE '1-800%' OR phone LIKE '%9931' OR shipper_id = 1;
 + We want to know the number of customers for each country. Please output distinct customer count group by country and sort the results from the highest to the lowest.
 
 ```sql
-Input your solution here
+SELECT COUNT(*) FROM customers;
+
+SELECT customer_id, COUNT(*)
+FROM customers
+GROUP BY customer_id
+HAVING COUNT(*) > 1;
+
+SELECT country, COUNT(DISTINCT customer_id) AS customer_count
+FROM customers
+GROUP BY country
+ORDER BY customer_count DESC;
+
 ```
 
 ### Q4: From the “employees” table, select first name, last name, and title of all employees with “country” as “USA” and with “title” as “Vice President, Sales”. 
 
 ```sql
-Input your solution here
+SELECT first_name, last_name, title
+FROM employees
+WHERE country = 'USA' AND title = 'Vice President, Sales';
+
 ```
 
 ### Q5: For the “orders” table, do three things: 
@@ -45,7 +59,22 @@ Input your solution here
 + We want to find out orders that took too long to fulfill. First, filter out orders that have “shipped_date” as NULL, and second, select the order_id, order_date, shipped_date, and the time elapsed between order_date and shipped_date (name it “gap”) of orders that have gap large than 30 days. Sort the results by gap in descending order.
 
 ```sql
-Input your solution here
+SELECT COUNT(*)
+FROM orders
+WHERE ship_region IS NULL;
+
+SELECT *
+FROM orders
+WHERE order_date BETWEEN '1996-07-10' AND '1996-07-30'
+  AND ship_country IN ('France', 'Germany');
+
+SELECT order_id, order_date, shipped_date, 
+       EXTRACT(DAY FROM (shipped_date - order_date)) AS gap
+FROM orders
+WHERE shipped_date IS NOT NULL
+  AND EXTRACT(DAY FROM (shipped_date - order_date)) > 30
+ORDER BY gap DESC;
+
 ```
 
 ### Q6:   From the “order_details” table, 
@@ -53,19 +82,31 @@ Input your solution here
 + Select the order_id, sub_total of those orders that have more than 5 distinct products, sort by sub_total in descending order. Please round the sub_total to the nearest integer.
 
 ```sql
-Input your solution here
+SELECT order_id, 
+       ROUND(SUM(unit_price * quantity), 2) AS sub_total
+FROM order_details
+GROUP BY order_id
+ORDER BY sub_total DESC
+LIMIT 5;
+
 ```
 
 ### Q7:   From the “suppliers” table, select contact_name, contact_title for those suppliers whose “contact_title” is NOT “Marketing Manager”, “Sales Manager”, and “Owner”. Sort the result by contact_name in ascending order and only output the top 5 record.
 
 ```sql
-Input your solution here
+SELECT contact_name, contact_title
+FROM suppliers
+WHERE contact_title <> "Marketing Manager, Sales Manager, Owner”
+ORDER BY ASD
+LIMIT 5;
 ```
 
 ### Q8: Without using JOIN statements, from the “suppliers” table, select company_name, city, country of those suppliers which sell products that have unit_price large than 100.
 
 ```sql
-Input your solution here
+SELECT company_name, city, county
+FROM suppliers,
+WHERE sup
 ```
 
 ### Q9: From the “order_details” table, for each product_id, count the number of distinct orders and calculate the average unit_price (round to 2 decimal place). Output those with an average unit_price less than $7. Sort the result in ascending order by avg_unit_price.
