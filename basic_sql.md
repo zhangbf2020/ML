@@ -65,7 +65,7 @@ WHERE ship_region IS NULL;
 
 SELECT *
 FROM orders
-WHERE order_date BETWEEN '1996-07-10' AND '1996-07-30'
+WHERE (order_date BETWEEN '1996-07-10' AND '1996-07-30')
   AND ship_country IN ('France', 'Germany');
 
 SELECT order_id, order_date, shipped_date, 
